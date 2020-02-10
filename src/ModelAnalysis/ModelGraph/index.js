@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState,} from 'react';
 import ReactDOM from 'react-dom';
 import {import_data} from './data';
 import G6 from '@antv/g6';
@@ -7,11 +7,18 @@ import Minimap from '@antv/g6/plugins/minimap';
 
 import {NodeTooltips, EdgeToolTips, NodeContextMenu} from './component';
 import './registerShape';
-
+import {tranform} from "./tranform"
+import {Card} from "antd";
 
 export default function CausalGraph(props) {
+
     const ref = React.useRef(null);
     let graph = null;
+
+    const [state, setState] = useState({
+        graph: props.graph,
+    });
+
 
     //mini_map
     const mini_map = new Minimap();
@@ -37,7 +44,7 @@ export default function CausalGraph(props) {
         graph.on('edge:mouseenter', evt => {
             const {item, target} = evt;
             //debugger;
-            const type = target.get('type');
+            const type = target.get('freq');
             if (type !== 'text') {
                 return;
             }
@@ -93,7 +100,7 @@ export default function CausalGraph(props) {
         });
 
         graph.on('node:click', evt => {
-            const { item } = evt;
+            const {item} = evt;
             const model = item.getModel();
             props.nodeOnClick(model);
         });
@@ -101,6 +108,7 @@ export default function CausalGraph(props) {
 
     };
     useEffect(() => {
+
         if (!graph) {
             graph = new G6.Graph({
                 container: ReactDOM.findDOMNode(ref.current),
@@ -116,7 +124,14 @@ export default function CausalGraph(props) {
                     shape: 'new_node',
                 },
                 defaultEdge: {
-                    shape: 'quadratic2', //'cubic-horizontal',quadratic2, smooth
+                    shape: 'cubic-horizontal', //'cubic-horizontal',quadratic2, smooth
+                    style: {
+                        radius: 20,
+                        offset: 45,
+                        endArrow: true,
+                        lineWidth: 2,
+                        stroke: '#C2C8D5'
+                    }
                 },
                 layout: {
                     type: 'dagre',
@@ -127,19 +142,28 @@ export default function CausalGraph(props) {
             });
         }
 
-        graph.data(import_data);
+        if (!state.graph.hasOwnProperty("nodes")) {
+            return
+        }
+
+        graph.data(tranform(state.graph));
 
         graph.render();
         graph.fitView();
         //graph.paint();
         bindEvents();
+
     }, []);
 
     return (
-        <div ref={ref}>
-            {showEdgeTooltip && <EdgeToolTips x={edgeTooltipX} y={edgeTooltipY} info={edgeTooltipInfo}/>}
-            {showNodeTooltip && <NodeTooltips x={nodeTooltipX} y={nodeTooltipY} info={nodeTooltipInfo}/>}
-            {showNodeContextMenu && <NodeContextMenu x={nodeContextMenuX} y={nodeContextMenuY}/>}
+        <div>
+            <Card>
+                <div ref={ref}>
+                    {showEdgeTooltip && <EdgeToolTips x={edgeTooltipX} y={edgeTooltipY} info={edgeTooltipInfo}/>}
+                    {showNodeTooltip && <NodeTooltips x={nodeTooltipX} y={nodeTooltipY} info={nodeTooltipInfo}/>}
+                    {showNodeContextMenu && <NodeContextMenu x={nodeContextMenuX} y={nodeContextMenuY}/>}
+                </div>
+            </Card>
         </div>
     );
 };

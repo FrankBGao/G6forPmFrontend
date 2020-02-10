@@ -1,3 +1,6 @@
+export const import_data =
+    {"nodes": [{"id": "node_0", "name": "Inform User", "infor": {}}, {"id": "node_1", "name": "Register", "infor": {}}, {"id": "node_2", "name": "Archive Repair", "infor": {}}, {"id": "node_3", "name": "Test Repair", "infor": {}}, {"id": "node_4", "name": "Repair (Simple)", "infor": {}}, {"id": "node_5", "name": "Analyze Defect", "infor": {}}, {"id": "node_6", "name": "Repair (Complex)", "infor": {}}, {"id": "node_7", "name": "Restart Repair", "infor": {}}], "edges": [{"source": "node_1", "target": "node_5", "data": {"freq": 1104}}, {"source": "node_5", "target": "node_5", "data": {"freq": 1104}}, {"source": "node_5", "target": "node_6", "data": {"freq": 528}}, {"source": "node_6", "target": "node_6", "data": {"freq": 414}}, {"source": "node_6", "target": "node_3", "data": {"freq": 720}}, {"source": "node_3", "target": "node_3", "data": {"freq": 1333}}, {"source": "node_3", "target": "node_0", "data": {"freq": 472}}, {"source": "node_0", "target": "node_2", "data": {"freq": 205}}, {"source": "node_5", "target": "node_4", "data": {"freq": 421}}, {"source": "node_4", "target": "node_4", "data": {"freq": 626}}, {"source": "node_4", "target": "node_3", "data": {"freq": 783}}, {"source": "node_3", "target": "node_7", "data": {"freq": 341}}, {"source": "node_7", "target": "node_4", "data": {"freq": 300}}, {"source": "node_4", "target": "node_0", "data": {"freq": 161}}, {"source": "node_0", "target": "node_4", "data": {"freq": 223}}, {"source": "node_3", "target": "node_2", "data": {"freq": 795}}, {"source": "node_6", "target": "node_0", "data": {"freq": 313}}, {"source": "node_0", "target": "node_6", "data": {"freq": 402}}, {"source": "node_0", "target": "node_3", "data": {"freq": 180}}, {"source": "node_5", "target": "node_0", "data": {"freq": 155}}, {"source": "node_7", "target": "node_6", "data": {"freq": 105}}, {"source": "node_0", "target": "node_7", "data": {"freq": 65}}, {"source": "node_7", "target": "node_0", "data": {"freq": 1}}]};
+
 // import dagre from 'dagre'
 //
 // function disposalData(data) {
@@ -57,165 +60,159 @@
 //   return data;
 // }
 
-export const import_data = {
-    nodes: [
-        {
-            id: 'id_0',
-            name: '创建',
-            infor: { ferq: 1384, color: '#8FC2B3' },
-        },
-        {
-            id: 'id_1',
-            name: '审批10',
-            infor: { ferq: 1384, color: '#8FC2B3' },
-        },
-        {
-            id: 'id_2',
-            name: '审批8',
-            infor: { ferq: 658, color: '#CFE8E3' },
-        },
-        {
-            id: 'id_3',
-            name: '审批9-[重复]',
-            infor: { ferq: 53, color: '#FDFEFE' },
-        },
-        {
-            id: 'id_4',
-            name: '审批10.[重复]',
-            infor: { ferq: 53, color: '#FDFEFE' },
-        },
-        {
-            id: 'id_5',
-            name: '审批9',
-            infor: { ferq: 1384, color: '#8FC2B3' },
-        },
-        {
-            id: 'id_6',
-            name: '创建.[重复]',
-            infor: { ferq: 205, color: '#F1F9F7' },
-        },
-        {
-            id: 'id_7',
-            name: '审批5',
-            infor: { ferq: 658, color: '#CFE8E3' },
-        },
-        {
-            id: 'id_8',
-            name: '审批2',
-            infor: { ferq: 1379, color: '#99C9BB' },
-        },
-        {
-            id: 'id_9',
-            name: '审批1',
-            infor: { ferq: 1384, color: '#8FC2B3' },
-        },
-        {
-            id: 'id_10',
-            name: '审批3',
-            infor: { ferq: 1384, color: '#8FC2B3' },
-        },
-        {
-            id: 'id_11',
-            name: '审批6',
-            infor: { ferq: 658, color: '#CFE8E3' },
-        },
-        { id: 'id_12', name: '结束', infor: { ferq: 1384, color: '#8FC2B3' } },
-        {
-            id: 'id_13',
-            name: '开始',
-            infor: { ferq: 1384, color: '#8FC2B3' },
-        },
-        {
-            id: 'id_14',
-            name: '审批4.[重复]',
-            infor: { ferq: 84, color: '#FDFEFE' },
-        },
-        {
-            id: 'id_15',
-            name: '审批4',
-            infor: { ferq: 1384, color: '#8FC2B3' },
-        },
-        {
-            id: 'id_16',
-            name: '审批1.[重复]',
-            infor: { ferq: 205, color: '#F1F9F7' },
-        },
-        {
-            id: 'id_17',
-            name: '审批7',
-            infor: { ferq: 658, color: '#CFE8E3' },
-        },
-    ],
-    edges: [
-        { source: 'id_8', target: 'id_10', data: { type: '强' } },
-        {
-            source: 'id_9',
-            target: 'id_15',
-            data: { type: '强' },
-        },
-        { source: 'id_1', target: 'id_12', data: { type: '强' } },
-        {
-            source: 'id_15',
-            target: 'id_5',
-            data: { type: '强' },
-        },
-        { source: 'id_13', target: 'id_0', data: { type: '强' } },
-        {
-            source: 'id_17',
-            target: 'id_2',
-            data: { type: '强' },
-        },
-        { source: 'id_3', target: 'id_4', data: { type: '强' } },
-        {
-            source: 'id_6',
-            target: 'id_16',
-            data: { type: '强' },
-        },
-        { source: 'id_7', target: 'id_11', data: { type: '强' } },
-        {
-            source: 'id_9',
-            target: 'id_8',
-            data: { type: '强' },
-        },
-        { source: 'id_11', target: 'id_17', data: { type: '强' } },
-        {
-            source: 'id_5',
-            target: 'id_1',
-            data: { type: '强' },
-        },
-        { source: 'id_0', target: 'id_9', data: { type: '强' } },
-        {
-            source: 'id_2',
-            target: 'id_5',
-            data: { type: '弱' },
-        },
-        { source: 'id_4', target: 'id_12', data: { type: '弱' } },
-        {
-            source: 'id_14',
-            target: 'id_5',
-            data: { type: '弱' },
-        },
-        { source: 'id_16', target: 'id_14', data: { type: '弱' } },
-        {
-            source: 'id_1',
-            target: 'id_3',
-            data: { type: '弱' },
-        },
-        { source: 'id_10', target: 'id_17', data: { type: '弱' } },
-        {
-            source: 'id_9',
-            target: 'id_6',
-            data: { type: '弱' },
-        },
-        { source: 'id_15', target: 'id_7', data: { type: '弱' } },
-    ],
-    // residual: {
-    //   batting: 0.8303390295354295,
-    //   case_correct: 0.9994781631342325,
-    //   entropy: 2.4313119004205666,
-    //   next_correct: 0.6772437561635537,
-    // },
-};
+// export const import_data = {
+//     nodes: [
+//         {
+//             id: 'id_0',
+//             name: '创建',
+//             infor: { ferq: 1384, color: '#8FC2B3' },
+//         },
+//         {
+//             id: 'id_1',
+//             name: '审批10',
+//             infor: { ferq: 1384, color: '#8FC2B3' },
+//         },
+//         {
+//             id: 'id_2',
+//             name: '审批8',
+//             infor: { ferq: 658, color: '#CFE8E3' },
+//         },
+//         {
+//             id: 'id_3',
+//             name: '审批9-[重复]',
+//             infor: { ferq: 53, color: '#FDFEFE' },
+//         },
+//         {
+//             id: 'id_4',
+//             name: '审批10.[重复]',
+//             infor: { ferq: 53, color: '#FDFEFE' },
+//         },
+//         {
+//             id: 'id_5',
+//             name: '审批9',
+//             infor: { ferq: 1384, color: '#8FC2B3' },
+//         },
+//         {
+//             id: 'id_6',
+//             name: '创建.[重复]',
+//             infor: { ferq: 205, color: '#F1F9F7' },
+//         },
+//         {
+//             id: 'id_7',
+//             name: '审批5',
+//             infor: { ferq: 658, color: '#CFE8E3' },
+//         },
+//         {
+//             id: 'id_8',
+//             name: '审批2',
+//             infor: { ferq: 1379, color: '#99C9BB' },
+//         },
+//         {
+//             id: 'id_9',
+//             name: '审批1',
+//             infor: { ferq: 1384, color: '#8FC2B3' },
+//         },
+//         {
+//             id: 'id_10',
+//             name: '审批3',
+//             infor: { ferq: 1384, color: '#8FC2B3' },
+//         },
+//         {
+//             id: 'id_11',
+//             name: '审批6',
+//             infor: { ferq: 658, color: '#CFE8E3' },
+//         },
+//         { id: 'id_12', name: '结束', infor: { ferq: 1384, color: '#8FC2B3' } },
+//         {
+//             id: 'id_13',
+//             name: '开始',
+//             infor: { ferq: 1384, color: '#8FC2B3' },
+//         },
+//         {
+//             id: 'id_14',
+//             name: '审批4.[重复]',
+//             infor: { ferq: 84, color: '#FDFEFE' },
+//         },
+//         {
+//             id: 'id_15',
+//             name: '审批4',
+//             infor: { ferq: 1384, color: '#8FC2B3' },
+//         },
+//         {
+//             id: 'id_16',
+//             name: '审批1.[重复]',
+//             infor: { ferq: 205, color: '#F1F9F7' },
+//         },
+//         {
+//             id: 'id_17',
+//             name: '审批7',
+//             infor: { ferq: 658, color: '#CFE8E3' },
+//         },
+//     ],
+//     edges: [
+//         { source: 'id_8', target: 'id_10', data: { type: '强' } },
+//         {
+//             source: 'id_9',
+//             target: 'id_15',
+//             data: { type: '强' },
+//         },
+//         { source: 'id_1', target: 'id_12', data: { type: '强' } },
+//         {
+//             source: 'id_15',
+//             target: 'id_5',
+//             data: { type: '强' },
+//         },
+//         { source: 'id_13', target: 'id_0', data: { type: '强' } },
+//         {
+//             source: 'id_17',
+//             target: 'id_2',
+//             data: { type: '强' },
+//         },
+//         { source: 'id_3', target: 'id_4', data: { type: '强' } },
+//         {
+//             source: 'id_6',
+//             target: 'id_16',
+//             data: { type: '强' },
+//         },
+//         { source: 'id_7', target: 'id_11', data: { type: '强' } },
+//         {
+//             source: 'id_9',
+//             target: 'id_8',
+//             data: { type: '强' },
+//         },
+//         { source: 'id_11', target: 'id_17', data: { type: '强' } },
+//         {
+//             source: 'id_5',
+//             target: 'id_1',
+//             data: { type: '强' },
+//         },
+//         { source: 'id_0', target: 'id_9', data: { type: '强' } },
+//         {
+//             source: 'id_2',
+//             target: 'id_5',
+//             data: { type: '弱' },
+//         },
+//         { source: 'id_4', target: 'id_12', data: { type: '弱' } },
+//         {
+//             source: 'id_14',
+//             target: 'id_5',
+//             data: { type: '弱' },
+//         },
+//         { source: 'id_16', target: 'id_14', data: { type: '弱' } },
+//         {
+//             source: 'id_1',
+//             target: 'id_3',
+//             data: { type: '弱' },
+//         },
+//         { source: 'id_10', target: 'id_17', data: { type: '弱' } },
+//         {
+//             source: 'id_9',
+//             target: 'id_6',
+//             data: { type: '弱' },
+//         },
+//         { source: 'id_15', target: 'id_7', data: { type: '弱' } },
+//     ],
+// };
 //const graph_data = disposalData(import_data);
 //export default import_data;
 
