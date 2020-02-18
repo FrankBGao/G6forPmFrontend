@@ -159,9 +159,9 @@ export default function CausalGraph(props) {
         <div>
             <Card>
                 <div ref={ref}>
-                    {showEdgeTooltip && <EdgeToolTips x={edgeTooltipX} y={edgeTooltipY} info={edgeTooltipInfo}/>}
-                    {showNodeTooltip && <NodeTooltips x={nodeTooltipX} y={nodeTooltipY} info={nodeTooltipInfo}/>}
-                    {showNodeContextMenu && <NodeContextMenu x={nodeContextMenuX} y={nodeContextMenuY}/>}
+                    {/*{showEdgeTooltip && <EdgeToolTips x={edgeTooltipX} y={edgeTooltipY} info={edgeTooltipInfo}/>}*/}
+                    {/*{showNodeTooltip && <NodeTooltips x={nodeTooltipX} y={nodeTooltipY} info={nodeTooltipInfo}/>}*/}
+                    {/*{showNodeContextMenu && <NodeContextMenu x={nodeContextMenuX} y={nodeContextMenuY}/>}*/}
                 </div>
             </Card>
         </div>

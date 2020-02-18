@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import CausalModel from "./ModelAnalysis"
-import {Row, Col, Card, Button, message, PageHeader, Input} from "antd";
+import {Row, Col, Divider, Button, message, PageHeader, Input,Modal,Upload,Icon} from "antd";
 import "antd/dist/antd.css";
 import service from "./service/index"
 
@@ -16,17 +16,38 @@ class Page extends React.Component {
         nodeNames: [] as string[],
         groupName: "" as string,
         graphData: {} as any,
-        graph: "" as any
+        graph: "" as any,
+        visible:false
     };
 
     nodeOnClick = (model: any) => {
-        if(this.state.nodeNames.indexOf(model.name) != -1){
+        if (this.state.nodeNames.indexOf(model.name) != -1) {
+            if (this.state.nodeNames.length === 1) {
+                this.setState({
+                    node: [] as { title: string }[],
+                    nodeNames: [] as string[],
+                });
+                return
+            } else {
+                const index = this.state.nodeNames.indexOf(model.name);
+                const node = [...this.state.node];
+                const nodeNames = [...this.state.nodeNames];
+
+                node.splice(index, 1);
+                nodeNames.splice(index, 1);
+                this.setState({
+                    node: node,
+                    nodeNames: nodeNames,
+                });
+            }
             return
+        } else {
+            this.setState({
+                node: this.state.node.concat([{title: model.name}]),
+                nodeNames: this.state.nodeNames.concat([model.name]),
+            });
         }
-        this.setState({
-            node: this.state.node.concat([{title: model.name}]),
-            nodeNames: this.state.nodeNames.concat([model.name]),
-        });
+
     };
 
 
@@ -67,7 +88,34 @@ class Page extends React.Component {
         this.setState({...this.state, groupName: event.target.value})
     };
 
+    showModal= ()=>{
+        this.setState({...this.state, visible: true})
+    };
+    ModalOnOk= ()=>{
+        this.setState({...this.state, visible: false})
+    };
+    ModalOnCancel= ()=>{
+        this.setState({...this.state, visible: false})
+    };
     render() {
+        const props = {
+            name: 'file',
+            action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+            headers: {
+                authorization: 'authorization-text',
+            },
+            onChange(info:any) {
+                if (info.file.status !== 'uploading') {
+                    console.log(info.file, info.fileList);
+                }
+                if (info.file.status === 'done') {
+                    message.success(`${info.file.name} file uploaded successfully`);
+                } else if (info.file.status === 'error') {
+                    message.error(`${info.file.name} file upload failed.`);
+                }
+            },
+        };
+
         return (
 
             <div style={{padding: 15}}>
@@ -88,21 +136,42 @@ class Page extends React.Component {
                         <div style={{padding: 10}}>
 
                             <div style={{padding: 10}}>
-                                <Button onClick={this.Refresh} style={{marginRight: 10}}>Refresh</Button>
-                                <Button onClick={this.Send} style={{marginRight: 10}}>Send</Button>
+                                <Button onClick={this.Refresh} style={{marginRight: 10, marginBottom:5}}>Refresh</Button>
+                                <Button onClick={this.Send} style={{marginRight: 10, marginBottom:5}}>Send</Button>
                                 <Button onClick={this.Clean}>Clean</Button>
                             </div>
-
+                            <Divider/>
                             <div style={{padding: 10}}>
-                                <Input placeholder="Group Name" allowClear={true} value={this.state.groupName} onChange={this.InputOnChange}/>
+                                <Input placeholder="Group Name" allowClear={true} value={this.state.groupName}
+                                       onChange={this.InputOnChange}/>
                             </div>
-
+                            <Divider/>
                             <div style={{padding: 10}}>
                                 {this.state.node.map((item) => {
-                                        return <div key={item.title}><p>{item.title}</p></div>
+                                        return <div key={item.title}><p>{item.title}</p> <Divider dashed={true}/></div>
+
                                     }
                                 )}
                             </div>
+                        </div>
+
+                        <div>
+                            <Button type="primary" onClick={this.showModal}>
+                                Open Modal
+                            </Button>
+                            <Modal
+                                title="Basic Modal"
+                                visible={this.state.visible}
+                                onOk={this.ModalOnOk}
+                                onCancel={this.ModalOnCancel}
+                            >
+                                <p>Some contents...</p>
+                                <Upload {...props}>
+                                    <Button>
+                                        <Icon type="upload" /> Click to Upload
+                                    </Button>
+                                </Upload>
+                            </Modal>
                         </div>
 
                     </Col>
