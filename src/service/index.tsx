@@ -3,11 +3,11 @@ import request from './request';
 import {message} from "antd";
 import {import_data} from '../ModelAnalysis/ModelGraph/data';
 
-const serverAddress = "http://localhost:5000";
+const serverAddress = "/server/api";
 
 // eslint-disable-next-line
 const queryNodes = async (groupName: string, activities:any[]) => {
-    const data = await request('/testing', {
+    const data = await request(serverAddress +'/gain_graph', {
         method: 'POST',
         data: {
             groupName: groupName,
@@ -23,9 +23,8 @@ const queryNodes = async (groupName: string, activities:any[]) => {
 
 
 const queryGraph = async () => {
-    //const data = await request.get(serverAddress+'/server/api/current_graph');
-    const data = import_data;
-    //console.log(data);
+    const data = await request.get(serverAddress+'/gain_graph');
+    //const data = import_data;
     //console.log(data);
     return new Promise(resolve =>
         resolve(data),
