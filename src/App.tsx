@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import CausalModel from "./ModelAnalysis"
-import {Row, Col, Divider, Button, message, PageHeader, Input, Modal, Upload, Icon} from "antd";
+import {Row, Col, Divider, Button, message, PageHeader, Input, Modal, Upload, Icon, Card} from "antd";
 import "antd/dist/antd.css";
 import service from "./service/index"
 
@@ -53,6 +53,7 @@ class Page extends React.Component {
 
     Clean = () => {
         this.setState({
+            ...this.state,
             node: [] as { title: string }[],
             nodeNames: [] as string[],//title: 'Ant Design Title 1'
         });
@@ -61,15 +62,19 @@ class Page extends React.Component {
     Send = async () => {
         message.info({content: "Sent to the server, calculating", key: "calculating", duration: 10000});
         const data = await service.queryNodes(this.state.groupName, this.state.nodeNames);//#frank,
-
-        console.log(data);
+        this.setState({
+            ...this.state,
+            graphData: "",
+            graph: ""
+        });
+        const new_node = <CausalModel nodeOnClick={this.nodeOnClick} graph={data}/>;
         this.setState({
             ...this.state,
             node: [] as { title: string }[],
             nodeNames: [] as string[],//title: 'Ant Design Title 1'
             groupName: "" as string,
             graphData: data,
-            graph: <CausalModel nodeOnClick={this.nodeOnClick} graph={data}/>
+            graph: new_node
         });
         message.success({content: "calculating complete", key: "calculating"});
 
@@ -78,14 +83,20 @@ class Page extends React.Component {
     Refresh = async () => {
         const data = await service.queryGraph();//#frank,
         message.info("Refresh");
+        this.setState({
+            ...this.state,
+            graphData: "",
+            graph: ""
+        });
 
+        const new_node = <CausalModel nodeOnClick={this.nodeOnClick} graph={data}/>;
         this.setState({
             ...this.state,
             node: [] as { title: string }[],
             nodeNames: [] as string[],//title: 'Ant Design Title 1'
             groupName: "" as string,
             graphData: data,
-            graph: <CausalModel nodeOnClick={this.nodeOnClick} graph={data}/>
+            graph: new_node
         });
     };
 
@@ -102,12 +113,20 @@ class Page extends React.Component {
 
         this.setState({
             ...this.state,
+            graphData: "",
+            graph: ""
+        });
+
+        const new_node = <CausalModel nodeOnClick={this.nodeOnClick} graph={data}/>;
+
+        this.setState({
+            ...this.state,
             node: [] as { title: string }[],
             nodeNames: [] as string[],//title: 'Ant Design Title 1'
             groupName: "" as string,
             graphData: data,
             visible: false,
-            graph: <CausalModel nodeOnClick={this.nodeOnClick} graph={data}/>
+            graph: new_node
         });
 
         //this.setState({...this.state, visible: false})
@@ -128,7 +147,7 @@ class Page extends React.Component {
             },
             onChange(info: any) {
                 if (info.file.status !== 'uploading') {
-                    console.log(info.file, info.fileList);
+                    //console.log(info.file, info.fileList);
                 }
                 if (info.file.status === 'done') {
                     message.success(`${info.file.name} file uploaded successfully`);
@@ -151,10 +170,13 @@ class Page extends React.Component {
                 <Row gutter={24} type={"flex"}>
                     <Col id={"graph"} xl={20} lg={20} md={24} sm={24} xs={24}>
                         <div style={{padding: 10}}>
+
                             {this.state.graph}
+
                         </div>
                     </Col>
                     <Col id={"name"} xl={4} lg={4} md={24} sm={24} xs={24}>
+
                         <div style={{padding: 10}}>
                             <div style={{padding: 10}}>
                                 <Button type="primary" onClick={this.showModal}>
@@ -184,25 +206,26 @@ class Page extends React.Component {
                             </div>
                         </div>
 
-                        <div>
-                            <Modal
-                                title="Upload File"
-                                visible={this.state.visible}
-                                onOk={this.ModalOnOk}
-                                onCancel={this.ModalOnCancel}
-                                destroyOnClose={true}
-                            >
-                                <p>XES Files</p>
-                                <Upload {...props}>
-                                    <Button>
-                                        <Icon type="upload"/> Click to Upload
-                                    </Button>
-                                </Upload>
-                            </Modal>
-                        </div>
 
                     </Col>
                 </Row>
+
+                <div>
+                    <Modal
+                        title="Upload File"
+                        visible={this.state.visible}
+                        onOk={this.ModalOnOk}
+                        onCancel={this.ModalOnCancel}
+                        destroyOnClose={true}
+                    >
+                        <p>XES Files</p>
+                        <Upload {...props}>
+                            <Button>
+                                <Icon type="upload"/> Click to Upload
+                            </Button>
+                        </Upload>
+                    </Modal>
+                </div>
             </div>
         );
     }

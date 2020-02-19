@@ -11,14 +11,13 @@ import {tranform} from "./tranform"
 import {Card} from "antd";
 
 export default function CausalGraph(props) {
+    const [state, setState] = useState({
+        graph: props.graph,
+        vis: props.vis,
+    });
 
     const ref = React.useRef(null);
     let graph = null;
-
-    const [state, setState] = useState({
-        graph: props.graph,
-    });
-
 
     //mini_map
     const mini_map = new Minimap();
@@ -107,6 +106,10 @@ export default function CausalGraph(props) {
 
 
     };
+
+    const updateGraph = ()=>{
+        graph.changeData(tranform(props.graph))
+    };
     useEffect(() => {
 
         if (!graph) {
@@ -146,12 +149,13 @@ export default function CausalGraph(props) {
             return
         }
 
-        graph.data(tranform(state.graph));
+        graph.data(tranform(props.graph));
 
         graph.render();
         graph.fitView();
-        //graph.paint();
+        graph.paint();
         bindEvents();
+        updateGraph();
 
     }, []);
 
