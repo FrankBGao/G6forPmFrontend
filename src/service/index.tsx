@@ -7,7 +7,7 @@ const serverAddress = "/server/api";
 
 // eslint-disable-next-line
 const queryNodes = async (groupName: string, activities:any[]) => {
-    const data = await request(serverAddress +'/gain_graph', {
+    const data = await request(serverAddress +'/group', {
         method: 'POST',
         data: {
             groupName: groupName,
@@ -23,7 +23,7 @@ const queryNodes = async (groupName: string, activities:any[]) => {
 
 
 const queryGraph = async () => {
-    const data = await request.get(serverAddress+'/group');
+    const data = await request.get(serverAddress+'/gain_graph');
     //const data = import_data;
     //console.log(data);
     return new Promise(resolve =>

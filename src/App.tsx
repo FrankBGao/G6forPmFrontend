@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import CausalModel from "./ModelAnalysis"
-import {Row, Col, Divider, Button, message, PageHeader, Input,Modal,Upload,Icon} from "antd";
+import {Row, Col, Divider, Button, message, PageHeader, Input, Modal, Upload, Icon} from "antd";
 import "antd/dist/antd.css";
 import service from "./service/index"
 
@@ -17,7 +17,7 @@ class Page extends React.Component {
         groupName: "" as string,
         graphData: {} as any,
         graph: "" as any,
-        visible:false
+        visible: false
     };
 
     nodeOnClick = (model: any) => {
@@ -59,16 +59,20 @@ class Page extends React.Component {
     };
 
     Send = async () => {
+        message.info({content: "Sent to the server, calculating", key: "calculating", duration: 10000});
         const data = await service.queryNodes(this.state.groupName, this.state.nodeNames);//#frank,
-        message.info("Sent to the server");
 
+        console.log(data);
         this.setState({
+            ...this.state,
             node: [] as { title: string }[],
             nodeNames: [] as string[],//title: 'Ant Design Title 1'
             groupName: "" as string,
             graphData: data,
             graph: <CausalModel nodeOnClick={this.nodeOnClick} graph={data}/>
         });
+        message.success({content: "calculating complete", key: "calculating"});
+
     };
 
     Refresh = async () => {
@@ -76,6 +80,7 @@ class Page extends React.Component {
         message.info("Refresh");
 
         this.setState({
+            ...this.state,
             node: [] as { title: string }[],
             nodeNames: [] as string[],//title: 'Ant Design Title 1'
             groupName: "" as string,
@@ -88,14 +93,15 @@ class Page extends React.Component {
         this.setState({...this.state, groupName: event.target.value})
     };
 
-    showModal= ()=>{
+    showModal = () => {
         this.setState({...this.state, visible: true})
     };
-    ModalOnOk= async ()=>{
+    ModalOnOk = async () => {
         const data = await service.queryGraph();//#frank,
         message.info("Refresh");
 
         this.setState({
+            ...this.state,
             node: [] as { title: string }[],
             nodeNames: [] as string[],//title: 'Ant Design Title 1'
             groupName: "" as string,
@@ -106,13 +112,13 @@ class Page extends React.Component {
 
         //this.setState({...this.state, visible: false})
     };
-    ModalOnCancel= ()=>{
+    ModalOnCancel = () => {
         this.setState({...this.state, visible: false})
     };
 
 
     render() {
-    const serverAddress = "/server/api";
+        const serverAddress = "/server/api";
 
         const props = {
             name: 'file',
@@ -120,7 +126,7 @@ class Page extends React.Component {
             headers: {
                 authorization: 'authorization-text',
             },
-            onChange(info:any) {
+            onChange(info: any) {
                 if (info.file.status !== 'uploading') {
                     console.log(info.file, info.fileList);
                 }
@@ -150,11 +156,18 @@ class Page extends React.Component {
                     </Col>
                     <Col id={"name"} xl={4} lg={4} md={24} sm={24} xs={24}>
                         <div style={{padding: 10}}>
-
                             <div style={{padding: 10}}>
-                                <Button onClick={this.Refresh} style={{marginRight: 10, marginBottom:5}}>Refresh</Button>
-                                <Button onClick={this.Send} style={{marginRight: 10, marginBottom:5}}>Send</Button>
+                                <Button type="primary" onClick={this.showModal}>
+                                    Upload File
+                                </Button>
+                            </div>
+                            <Divider/>
+                            <div style={{padding: 10}}>
+
+                                <Button onClick={this.Send} style={{marginRight: 10, marginBottom: 5}}>Send</Button>
                                 <Button onClick={this.Clean}>Clean</Button>
+                                <Button onClick={this.Refresh}
+                                        style={{marginRight: 10, marginBottom: 5}}>Refresh</Button>
                             </div>
                             <Divider/>
                             <div style={{padding: 10}}>
@@ -172,19 +185,17 @@ class Page extends React.Component {
                         </div>
 
                         <div>
-                            <Button type="primary" onClick={this.showModal}>
-                                Open Modal
-                            </Button>
                             <Modal
-                                title="Basic Modal"
+                                title="Upload File"
                                 visible={this.state.visible}
                                 onOk={this.ModalOnOk}
                                 onCancel={this.ModalOnCancel}
+                                destroyOnClose={true}
                             >
-                                <p>Some contents...</p>
+                                <p>XES Files</p>
                                 <Upload {...props}>
                                     <Button>
-                                        <Icon type="upload" /> Click to Upload
+                                        <Icon type="upload"/> Click to Upload
                                     </Button>
                                 </Upload>
                             </Modal>
