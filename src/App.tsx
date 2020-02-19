@@ -91,16 +91,32 @@ class Page extends React.Component {
     showModal= ()=>{
         this.setState({...this.state, visible: true})
     };
-    ModalOnOk= ()=>{
-        this.setState({...this.state, visible: false})
+    ModalOnOk= async ()=>{
+        const data = await service.queryGraph();//#frank,
+        message.info("Refresh");
+
+        this.setState({
+            node: [] as { title: string }[],
+            nodeNames: [] as string[],//title: 'Ant Design Title 1'
+            groupName: "" as string,
+            graphData: data,
+            visible: false,
+            graph: <CausalModel nodeOnClick={this.nodeOnClick} graph={data}/>
+        });
+
+        //this.setState({...this.state, visible: false})
     };
     ModalOnCancel= ()=>{
         this.setState({...this.state, visible: false})
     };
+
+
     render() {
+    const serverAddress = "/server/api";
+
         const props = {
             name: 'file',
-            action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+            action: serverAddress + "/upload",
             headers: {
                 authorization: 'authorization-text',
             },
