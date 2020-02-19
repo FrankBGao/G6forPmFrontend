@@ -165,7 +165,7 @@ class Page extends React.Component {
                             <div style={{padding: 10}}>
 
                                 <Button onClick={this.Send} style={{marginRight: 10, marginBottom: 5}}>Send</Button>
-                                <Button onClick={this.Clean}>Clean</Button>
+                                <Button onClick={this.Clean} style={{marginRight: 10, marginBottom: 5}}>Clean</Button>
                                 <Button onClick={this.Refresh}
                                         style={{marginRight: 10, marginBottom: 5}}>Refresh</Button>
                             </div>
