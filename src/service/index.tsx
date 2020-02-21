@@ -32,4 +32,14 @@ const queryGraph = async () => {
 };
 
 
-export default {queryGraph, queryNodes}
+const queryFile = async () => {
+    const data = await request.get(serverAddress+'/download');
+    //const data = import_data;
+    //console.log(data);
+    return new Promise(resolve =>
+        resolve(data),
+    );
+};
+
+
+export default {queryGraph, queryNodes,queryFile}

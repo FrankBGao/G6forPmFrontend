@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+/* tslint:disable */
+import React from 'react';
 import CausalModel from "./ModelAnalysis"
-import {Row, Col, Divider, Button, message, PageHeader, Input, Modal, Upload, Icon, Card} from "antd";
+import {Row, Col, Divider, Button, message, PageHeader, Input, Modal, Upload, Icon, Select} from "antd";
 import "antd/dist/antd.css";
 import service from "./service/index"
+
+const {Option} = Select;
 
 // const Page: React.FC = props => {
 class Page extends React.Component {
@@ -17,13 +20,16 @@ class Page extends React.Component {
         groupName: "" as string,
         graphData: {} as any,
         graph: "" as any,
-        visible: false
+        visible: false,
+        downVisible: false,
+        FileType: "DFG",
     };
 
     nodeOnClick = (model: any) => {
         if (this.state.nodeNames.indexOf(model.name) != -1) {
             if (this.state.nodeNames.length === 1) {
                 this.setState({
+                    ...this.state,
                     node: [] as { title: string }[],
                     nodeNames: [] as string[],
                 });
@@ -36,6 +42,7 @@ class Page extends React.Component {
                 node.splice(index, 1);
                 nodeNames.splice(index, 1);
                 this.setState({
+                    ...this.state,
                     node: node,
                     nodeNames: nodeNames,
                 });
@@ -43,6 +50,7 @@ class Page extends React.Component {
             return
         } else {
             this.setState({
+                ...this.state,
                 node: this.state.node.concat([{title: model.name}]),
                 nodeNames: this.state.nodeNames.concat([model.name]),
             });
@@ -104,6 +112,7 @@ class Page extends React.Component {
         this.setState({...this.state, groupName: event.target.value})
     };
 
+    //upload
     showModal = () => {
         this.setState({...this.state, visible: true})
     };
@@ -133,6 +142,27 @@ class Page extends React.Component {
     };
     ModalOnCancel = () => {
         this.setState({...this.state, visible: false})
+    };
+
+    //download
+    changeFileType = (value: string) => {
+        this.setState({...this.state, FileType: value})
+    };
+    showDownloadModal = () => {
+        this.setState({...this.state, downVisible: true})
+    };
+
+    DownloadModalOnCancel = () => {
+        this.setState({...this.state, downVisible: false})
+    };
+
+    handleDownload = () => {
+        const oa = document.createElement('a');
+        oa.href = `localhost:5000/server/api/download/${this.state.FileType}`;
+        oa.setAttribute('target', '_blank');
+        document.body.appendChild(oa);
+        oa.click();
+        //await service.queryFile()
     };
 
 
@@ -182,6 +212,9 @@ class Page extends React.Component {
                                 <Button type="primary" onClick={this.showModal}>
                                     Upload File
                                 </Button>
+                                <Button type="primary" onClick={this.showDownloadModal} style={{marginLeft: 5}}>
+                                    Download File
+                                </Button>
                             </div>
                             <Divider/>
                             <div style={{padding: 10}}>
@@ -226,7 +259,30 @@ class Page extends React.Component {
                         </Upload>
                     </Modal>
                 </div>
+                <div>
+                    <Modal
+                        title="Download File"
+                        visible={this.state.downVisible}
+                        //onOk={this.DownloadModalOnOK}
+                        onCancel={this.DownloadModalOnCancel}
+                        destroyOnClose={true}
+                        footer={
+                            <Button type="primary" onClick={this.DownloadModalOnCancel}>Cancel</Button>
+                        }
+                    >
+                        <p>File Type</p>
+                        <Select defaultValue="DFG" style={{width: 120}} onChange={this.changeFileType}>
+                            <Option value="DFG">DFG</Option>
+                            <Option value="NewLog">New Log</Option>
+                        </Select>
+                        <Button type="primary" onClick={this.handleDownload} style={{marginLeft:10}}>
+                            Download
+                        </Button>
+                    </Modal>
+                </div>
             </div>
+
+
         );
     }
 }
