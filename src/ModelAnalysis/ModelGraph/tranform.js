@@ -1,3 +1,5 @@
+// This function is the interface for backend server data.
+// This function transfers the data for G6, add some style for nodes and edges
 export const tranform = (data)=>{
     const nodes = data.nodes;
     const edges = data.edges.map((edge)=>{

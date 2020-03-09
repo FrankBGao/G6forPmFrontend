@@ -1,5 +1,8 @@
 import G6 from '@antv/g6';
 
+// this is from the G6's example
+// in this project, we haven't used these functions
+
 const lineWidthMap = {
     "强": 5,
     "弱": 3,

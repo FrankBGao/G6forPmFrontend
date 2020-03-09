@@ -92,7 +92,7 @@ class Page extends React.Component {
         message.success({content: "calculating complete", key: "calculating"});
 
     };
-    // the original graph could be generated here, without upload any event log file
+    // the original graph could be generated here, reload the graph's data from the backend, regenerate the graph again
     Refresh = async () => {
         // here is the contact with the backend server
         const data = await service.queryGraph();//#frank,

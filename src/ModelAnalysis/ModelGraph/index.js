@@ -10,7 +10,7 @@ import './registerShape';
 import {tranform} from "./tranform"
 import {Card} from "antd";
 
-export default function CausalGraph(props) {
+export default function DGraph(props) {
     const [state, setState] = useState({
         graph: props.graph,
         vis: props.vis,
@@ -22,24 +22,24 @@ export default function CausalGraph(props) {
     //mini_map
     const mini_map = new Minimap();
 
-    // 边tooltip坐标
+    // edges tooltip position
     const [showEdgeTooltip, setShowEdgeTooltip] = useState(false);
     const [edgeTooltipX, setEdgeTooltipX] = useState(0);
     const [edgeTooltipY, setEdgeTooltipY] = useState(0);
     const [edgeTooltipInfo, setEdgeTooltipInfo] = useState(0);
 
-    // 节点tooltip坐标
+    // node tooltip position
     const [showNodeTooltip, setShowNodeTooltip] = useState(false);
     const [nodeTooltipX, setNodeToolTipX] = useState(0);
     const [nodeTooltipY, setNodeToolTipY] = useState(0);
     const [nodeTooltipInfo, setNodeToolTipInfo] = useState(0);
 
-    // 节点ContextMenu坐标
+    // node ContextMenu position
     const [showNodeContextMenu, setShowNodeContextMenu] = useState(false);
     const [nodeContextMenuX, setNodeContextMenuX] = useState(0);
     const [nodeContextMenuY, setNodeContextMenuY] = useState(0);
     const bindEvents = () => {
-        // 监听edge上面mouse事件
+        // listening edge's mouse event
         graph.on('edge:mouseenter', evt => {
             const {item, target} = evt;
             //debugger;
@@ -54,7 +54,7 @@ export default function CausalGraph(props) {
 
             const model = item.getModel();
             const {endPoint} = model;
-            // y=endPoint.y - height / 2，在同一水平线上，x值=endPoint.x - width - 10
+            // y=endPoint.y - height / 2，at same level，x=endPoint.x - width - 10
             const y = endPoint.y - 35;
             const x = endPoint.x - 150 - 10;
             const point = graph.getCanvasByPoint(x, y);
@@ -79,7 +79,7 @@ export default function CausalGraph(props) {
             graph.setItemState(edge, 'active', !edge.hasState('active')); // 切换选中
         });
 
-        // 监听node上面mouse事件
+        // listening node's mouse event
         graph.on('node:mouseenter', evt => {
             const {item} = evt;
             const model = item.getModel();
@@ -92,7 +92,7 @@ export default function CausalGraph(props) {
             setShowNodeTooltip(true);
         });
 
-        // 节点上面触发mouseleave事件后隐藏tooltip和ContextMenu
+        // node mouseleave event will hide tooltip and ContextMenu
         graph.on('node:mouseleave', () => {
             setShowNodeTooltip(false);
             setShowNodeContextMenu(false);
