@@ -1,7 +1,13 @@
 import request from './request';
 
-import {message} from "antd";
-import {import_data} from '../ModelAnalysis/ModelGraph/data';
+// This is the interface with the backend server
+// frontend page use html request to interact with the backend
+// Normally, we use GET and POST requests.
+// The GET is for sending the no encryption and small amount of data
+// For other type of data, we should use POST.
+
+// import {message} from "antd";
+// import {import_data} from '../ModelAnalysis/ModelGraph/data'; // this is a testing data
 
 const serverAddress = "/server/api";
 
@@ -42,4 +48,4 @@ const queryFile = async () => {
 };
 
 
-export default {queryGraph, queryNodes,queryFile}
+export default {queryGraph, queryNodes, queryFile}
