@@ -10,10 +10,6 @@ const {Option} = Select;
 // const Page: React.FC = props => {
 class Page extends React.Component {
 
-    // const [state, setState] = useState({
-    //     node: [] as { title: string }[],
-    //     nodeNames: [] as string[],//title: 'Ant Design Title 1'
-    // });
     state = {
         node: [] as { title: string }[],
         nodeNames: [] as string[],
@@ -209,10 +205,18 @@ class Page extends React.Component {
 
                         <div style={{padding: 10}}>
                             <div style={{padding: 10}}>
-                                <Button type="primary" onClick={this.showModal}>
+                                {/*<Row gutter={24} type={"flex"}>*/}
+                                    {/*<Col id={"Upload"} xl={12} lg={12} md={24} sm={24} xs={24}>*/}
+
+                                    {/*</Col>*/}
+                                    {/*<Col id={"Upload"} xl={12} lg={12} md={24} sm={24} xs={24}>*/}
+
+                                    {/*</Col>*/}
+                                {/*</Row>*/}
+                                <Button type="primary" onClick={this.showModal} style={{marginRight: 10, marginBottom: 5}}>
                                     Upload File
                                 </Button>
-                                <Button type="primary" onClick={this.showDownloadModal} style={{marginLeft: 5}}>
+                                <Button type="primary" onClick={this.showDownloadModal} style={{marginRight: 10, marginBottom: 5}}>
                                     Download File
                                 </Button>
                             </div>
@@ -275,7 +279,7 @@ class Page extends React.Component {
                             <Option value="DFG">DFG</Option>
                             <Option value="NewLog">New Log</Option>
                         </Select>
-                        <Button type="primary" onClick={this.handleDownload} style={{marginLeft:10}}>
+                        <Button type="primary" onClick={this.handleDownload} style={{marginLeft: 10}}>
                             Download
                         </Button>
                     </Modal>
